@@ -31,7 +31,7 @@ var imagenesRoutes = require('./routes/imagenes');
 
 
 // Conexión a la base de datos
-mongoose.connection.openUri('mongodb://localhost:27017/taekwondoDB', (err, res) => {
+mongoose.connection.openUri('mongodb://Cristian08:Nodejs2018@ds113169.mlab.com:13169/taekwondo', (err, res) => {
 
   if (err) throw err;
 
