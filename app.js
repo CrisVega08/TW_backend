@@ -29,7 +29,7 @@ var busquedaRoutes = require('./routes/busqueda');
 var uploadRoutes = require('./routes/upload');
 var imagenesRoutes = require('./routes/imagenes');
 
-
+const port = process.env.PORT || 3000;
 // Conexión a la base de datos
 mongoose.Promise = global.Promise;
 mongoose.connect('mongodb://Cristian:TaekWondo@ds113169.mlab.com:13169/taekwondo', { useMongoClient: true })
@@ -62,6 +62,6 @@ app.use('/', appRoutes);
 
 
 // Escuchar peticiones
-app.listen(3000, () => {
+app.listen(port, () => {
   console.log('Express server puerto 3000: \x1b[32m%s\x1b[0m', 'online');
 });
