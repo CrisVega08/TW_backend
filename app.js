@@ -31,13 +31,17 @@ var imagenesRoutes = require('./routes/imagenes');
 
 
 // Conexión a la base de datos
-mongoose.connection.openUri('mongodb://Cristian08:Nodejs2018@ds113169.mlab.com:13169/taekwondo', (err, res) => {
+mongoose.Promise = global.Promise;
+mongoose.connect('mongodb://Cristian:TaekWondo@ds113169.mlab.com:13169/taekwondo', { useMongoClient: true })
+  .then(() => {
+    console.log('Base de datos: \x1b[32m%s\x1b[0m', 'online');
+  }).catch((err) => { throw err })
+  // mongoose.connection.openUri('mongodb://Cristian08:Nodejs2018@ds113169.mlab.com:13169/taekwondo', (err, res) => {
 
-  if (err) throw err;
+//   if (err) throw err;
 
-  console.log('Base de datos: \x1b[32m%s\x1b[0m', 'online');
 
-});
+// });
 
 // Server index config
 // var serveIndex = require('serve-index');
