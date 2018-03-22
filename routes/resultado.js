@@ -68,8 +68,12 @@ app.put('/:id', mdAutenticacion.verificaToken, (req, res) => {
       });
     }
     // resul.nombre = body.nombre;
-    resul.usuario = req.usuario._id;
+    resul.usuario = body.usuario;
     resul.prueba = body.prueba;
+    resul.tiempo = body.tiempo;
+    resul.errores = body.errores;
+    resul.entreGolpes = body.entreGolpes;
+
     resul.save((err, resulGuardado) => {
       if (err) {
         return res.status(400).json({
@@ -97,8 +101,10 @@ app.post('/', mdAutenticacion.verificaToken, (req, res) => {
 
   var resultado = new Resultado({
     tiempo: body.tiempo,
-    usuario: req.usuario._id,
-    prueba: body.prueba_id
+    usuario: body.usuario,
+    prueba: body.prueba,
+    errores: body.errores,
+    entreGolpes: body.entreGolpes
   });
 
   resultado.save((err, resultadoGuardado) => {

@@ -69,7 +69,6 @@ app.put('/:tipo/:id', (req, res, next) => {
         errors: err
       });
     }
-
     subirPorTipo(tipo, id, nombreArchivo, res);
   })
 });
