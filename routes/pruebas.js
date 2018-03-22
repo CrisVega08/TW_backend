@@ -65,6 +65,7 @@ app.put('/:id', mdAutenticacion.verificaToken, (req, res) => {
     prueba.nombre = body.nombre;
     prueba.usuario = req.usuario._id;
     prueba.secuencia = body.secuencia;
+    prueba.descripcion = body.descripcion;
     prueba.save((err, pruebaGuardado) => {
       if (err) {
         return res.status(400).json({
@@ -86,11 +87,13 @@ app.put('/:id', mdAutenticacion.verificaToken, (req, res) => {
 // ==========================================
 app.post('/', mdAutenticacion.verificaToken, (req, res) => {
 
+  console.log(body)
   var body = req.body;
   var prueba = new Prueba({
     nombre: body.nombre,
     usuario: req.usuario._id,
-    secuencia: body.secuencia
+    secuencia: body.secuencia,
+    descripcion: body.descripcion
   });
   prueba.save((err, pruebaGuardada) => {
     if (err) {
@@ -100,6 +103,7 @@ app.post('/', mdAutenticacion.verificaToken, (req, res) => {
         errors: err
       });
     }
+
     res.status(201).json({
       ok: true,
       prueba: pruebaGuardada

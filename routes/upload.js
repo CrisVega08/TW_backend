@@ -6,18 +6,19 @@ var fs = require('fs');
 
 var app = express();
 
-var Usuario = require('../models/usuario');
-
-// default options
+const Usuario = require('../models/usuario');
+const Prueba = require('../models/prueba')
+  // default options
 app.use(fileUpload());
 
 app.put('/:tipo/:id', (req, res, next) => {
-
+  console.log(req.params)
   var tipo = req.params.tipo;
   var id = req.params.id;
 
   // tipos de colección
-  var tiposValidos = ['usuarios'];
+  console.log(tipo);
+  var tiposValidos = ['usuarios', 'pruebas'];
   if (tiposValidos.indexOf(tipo) < 0) {
     return res.status(400).json({
       ok: false,
@@ -100,12 +101,36 @@ function subirPorTipo(tipo, id, nombreArchivo, res) {
           mensaje: 'Imagen de usuario actualizada',
           usuario: usuarioActualizado
         });
-
       })
-
-
     });
+  }
+  if (tipo === 'pruebas') {
+    Prueba.findById(id, (err, prueba) => {
+      if (!prueba) {
+        return res.status(400).json({
+          ok: true,
+          mensaje: 'prueba no existe',
+          errors: { message: 'prueba no existe' }
+        });
+      }
+      var pathViejo = './uploads/pruebas/' + prueba.img;
 
+      // Si existe, elimina la imagen anterior
+      if (fs.existsSync(pathViejo)) {
+        fs.unlink(pathViejo);
+      }
+      prueba.img = nombreArchivo;
+      prueba.save((err, pruebaActualizado) => {
+
+        pruebaActualizado.password = ':)';
+
+        return res.status(200).json({
+          ok: true,
+          mensaje: 'Imagen de prueba actualizada',
+          prueba: pruebaActualizado
+        });
+      })
+    });
   }
 
 }
